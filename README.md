@@ -26,17 +26,19 @@ Now try typing some expressions
 
 We have syntax support for writing, but no functions for that
 
-    ppp | Each line
-    ppp | is an arg to the tag
+    puts | Each line
+    puts | is an arg to the tag
 
-    ppp | Another
+    puts | Another
+
+Remember to put a blank line after the last line
 
 This should be the same as the following, but shuwar has no support for string literals, so it
 will not work
 
     [dont type this block]
-    [ppp "Each line" "is an arg to the tag"]
-    [ppp "Another"]
+    [puts "Each line" "is an arg to the tag"]
+    [puts "Another"]
 
 Like lisp we have `#` for quote
 
