@@ -1,29 +1,45 @@
 # Shuwar
 
-TODO: Write a gem description
+Just a writing system, but with lisp-like syntax.
 
-## Installation
+Inspired by [eido][] and [youki][]
 
-Add this line to your application's Gemfile:
-
-    gem 'shuwar'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install shuwar
+[youki]: https://github.com/be5invis/youki
+[eido]:  https://github.com/be5invis/eido
 
 ## Usage
 
-TODO: Write usage instructions here
+An "interactive shell":
 
-## Contributing
+    $ shuwar
 
-1. Fork it ( https://github.com/[my-github-username]/shuwar/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
+Now try typing some expressions
+
+    [print 1]
+
+    [set ppp [lambda [x]
+        [print x]
+        [print x]
+    ]]
+
+    [ppp 1]
+
+We have syntax support for writing, but no functions for that
+
+    ppp | Each line
+    ppp | is an arg to the tag
+
+    ppp | Another
+
+This should be the same as the following, but shuwar has no support for string literals, so it
+will not work
+
+    [dont type this block]
+    [ppp "Each line" "is an arg to the tag"]
+    [ppp "Another"]
+
+Like lisp we have `#` for quote
+
+    [print #[print 1]]
+
+No comment syntax yet
