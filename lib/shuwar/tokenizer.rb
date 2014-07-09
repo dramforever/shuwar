@@ -81,7 +81,17 @@ module Shuwar
       end
     end
 
-    class OpenParen
+    class Token
+      alias_method :inspect, :to_s
+
+      def eql?(other)
+        to_s == other.to_s
+      end
+
+      alias_method :==, :eql?
+    end
+
+    class OpenParen < Token
       def to_s
         "["
       end
@@ -89,7 +99,7 @@ module Shuwar
       alias_method :inspect, :to_s
     end
 
-    class CloseParen
+    class CloseParen < Token
       def to_s
         "]"
       end
@@ -97,7 +107,7 @@ module Shuwar
       alias_method :inspect, :to_s
     end
 
-    class Quote
+    class Quote < Token
       def to_s
         "#"
       end

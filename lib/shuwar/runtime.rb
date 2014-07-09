@@ -1,18 +1,19 @@
+require "shuwar/stdlib"
+
 module Shuwar
   class Runtime
     attr_accessor :value_table, :marco_table
 
-    def initialize(from = nil)
-      case from
-        when Shuwar::Runtime
-          @value_table = from.value_table.dup
-          @marco_table = from.marco_table.dup
-        when nil
-          @value_table = Shuwar::Runtime::DEFAULT_VALUES
-          @marco_table = Shuwar::Runtime::DEFAULT_MARCOS
-        else
-          raise "Wrong type of arg for initialize"
-      end
+    def initialize
+      @value_table = {}
+      @marco_table = {}
+      load_lib :base
+    end
+
+    def load_lib(name)
+      vs, ms = Shuwar::Stdlib.load name
+      @value_table.merge! vs
+      @marco_table.merge! ms
     end
 
     def set_value(key, val)
@@ -63,54 +64,6 @@ module Shuwar
         else x
       end
     end
-
-    DEFAULT_VALUES = {
-        some_tag: lambda do |*texts|
-          "SOME ( #{ texts.join "\n" } ) TAG"
-        end,
-
-        p: lambda do |*texts|
-          "<p>#{ texts.join "\n" }</p>"
-        end,
-
-        begin: lambda do |*vals|
-          vals[-1]
-        end,
-
-        print: lambda do |*vals|
-          vals.each {|a| p a}
-        end,
-
-        puts: lambda do |*vals|
-          puts *vals
-        end
-    }
-    DEFAULT_MARCOS = {
-        quote: lambda do |val|
-          val
-        end,
-
-        set: lambda do |key, val|
-          set_value key, evaluate(val)
-        end,
-
-        lambda: lambda do |args, *body|
-          if body.one?
-            env = self # Avoiding self trouble
-            lambda do |*as|
-              raise "Expecting #{args.size} args, got #{as.size}" unless as.size == args.size
-              e = env.dup
-              (0...as.size).each do |i|
-                env.set_value args[i], as[i]
-              end
-
-              e.evaluate body[0]
-            end
-          else
-            evaluate [:lambda, args, [:begin, *body]]
-          end
-        end
-    }
   end
 
 
