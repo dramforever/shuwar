@@ -1,14 +1,27 @@
 module Shuwar
+
+  ##
+  # The tokenizer
   class Tokenizer
+
+
+    ##
+    # Make a new tokenizer that reads input from +f+
+    #
+    # +f+ should respond to +each_line+
     def initialize(f)
       @input = f
       @stack = []
     end
 
+    ##
+    # Just a helper to chomp the line before +each_line+ing
     def each_input_line(&block)
       @input.each_line {|l| block.call l.chomp }
     end
 
+    ##
+    # Iterates through each line and yield tokens. You should call this
     def each_token(&block)
       each_input_line do |line|
         each_token_in_line line, &block
@@ -17,6 +30,8 @@ module Shuwar
       alter_stack [], &block
     end
 
+    ##
+    # Tokenize one line
     def each_token_in_line(line, &block)
       sp = line.split "|", 2
       if sp.size != 2
@@ -57,6 +72,12 @@ module Shuwar
       end
     end
 
+    ##
+    # Change stack to the specified contents by yielding an open paren and
+    # a symbol when push is needed and yielding a close paren when pop is
+    # needed.
+    #
+    # Make sure you call +alter_stack [], block+ before you go
     def alter_stack(to, &block)
       stack_tail, to_tail = @stack.dup, to.dup
 
@@ -81,6 +102,8 @@ module Shuwar
       end
     end
 
+    ##
+    # The base token class. We use these to distinguish them.
     class Token
       alias_method :inspect, :to_s
 
@@ -91,6 +114,8 @@ module Shuwar
       alias_method :==, :eql?
     end
 
+    ##
+    # Just opening paren
     class OpenParen < Token
       def to_s
         "["
@@ -99,6 +124,8 @@ module Shuwar
       alias_method :inspect, :to_s
     end
 
+    ##
+    # Just closing paren
     class CloseParen < Token
       def to_s
         "]"
@@ -107,6 +134,8 @@ module Shuwar
       alias_method :inspect, :to_s
     end
 
+    ##
+    # Just quote
     class Quote < Token
       def to_s
         "#"
