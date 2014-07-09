@@ -13,7 +13,7 @@ module Shuwar
 
     def load_lib(name)
       return if @loaded_libs.include? name
-      loaded_libs.push name
+      @loaded_libs.push name
       vs, ms = Shuwar::Stdlib.load name
       @value_table.merge! vs
       @marco_table.merge! ms
