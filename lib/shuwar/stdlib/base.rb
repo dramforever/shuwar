@@ -4,7 +4,7 @@ module Shuwar::Stdlib
   module Base
     VALUES = {
         load: lambda do |lib|
-          load libk
+          load lib
         end,
 
         some_tag: lambda do |*texts|
