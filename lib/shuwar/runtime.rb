@@ -26,6 +26,7 @@ module Shuwar
 
     def get_value(key)
       raise "Why reference a non-symbol?" unless key
+      raise "No value for #{key}" unless has_value? key
       @value_table[key]
     end
 
