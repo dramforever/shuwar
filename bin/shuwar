@@ -6,6 +6,11 @@ tk = Shuwar::Tokenizer.new $stdin
 parser = Shuwar::Parser.new tk
 runtime = Shuwar::Runtime.new
 
-parser.each_object do |x|
-  runtime.evaluate x
+begin
+  parser.each_object do |x|
+    runtime.evaluate x
+  end
+rescue
+  puts "!!! An Error Occured"
+  puts "!!! #{$!.class}: #{$!}"
 end
