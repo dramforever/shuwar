@@ -11,6 +11,13 @@ module Shuwar
       load_lib :base
     end
 
+    def dup
+      a = super
+      a.value_table = a.value_table.dup
+      a.marco_table = a.marco_table.dup
+      a
+    end
+
     def load_lib(name)
       return if @loaded_libs.include? name
       @loaded_libs.push name

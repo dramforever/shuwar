@@ -24,4 +24,12 @@ describe Shuwar::Runtime do
     a.evaluate [:set, :a, 1]
     expect(a.evaluate :a).to eq 1
   end
+
+  it "should be able to do lexical scoping" do
+    a = rt
+    a.evaluate [:set, :a, 1]
+    a.evaluate [:set, :b, [:lambda, [], [:set, :a, 2]]]
+    a.evaluate [:b]
+    expect(a.evaluate :a).to eq 1
+  end
 end
