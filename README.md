@@ -1,5 +1,7 @@
 # Shuwar
 
+[![Build Status](https://travis-ci.org/dramforever/shuwar.svg?branch=master)](https://travis-ci.org/dramforever/shuwar)
+
 Just a writing system, but with lisp-like syntax.
 
 Inspired by [eido][] and [youki][]
