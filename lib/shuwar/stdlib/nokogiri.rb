@@ -25,6 +25,7 @@ module Shuwar::Stdlib
             else c.add_to ele
           end
         end
+        a << ele
       end
     end
 
