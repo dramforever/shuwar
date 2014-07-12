@@ -1,9 +1,11 @@
 module Shuwar
   module Stdlib
     autoload :Base, "shuwar/stdlib/base"
+    autoload :Nokogiri, "shuwar/stdlib/nokogiri"
 
     LIST = {
-      base: :Base
+      base: :Base,
+      nokogiri: :Nokogiri
     }
 
     def self.load(name)
