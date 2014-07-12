@@ -2,7 +2,7 @@
 
 require "shuwar"
 
-tk = Shuwar::Tokenizer.new $stdin
+tk = Shuwar::Tokenizer.new ARGF
 parser = Shuwar::Parser.new tk
 runtime = Shuwar::Runtime.new
 
