@@ -26,6 +26,10 @@ describe Shuwar::Stdlib::Nokogiri do
 
   it "should produce html" do
     run [:put_html, "aaa"]
-    run [:put_html, [:div, [], "aaa"]]
+    run [:put_html, [:div, [:quote, []], "xxx"]]
+  end
+
+  it "allows tags with no attrs" do
+    run [:div, [:div, "aaa"]]
   end
 end

@@ -31,7 +31,12 @@ module Shuwar::Stdlib
     end
 
     def self.tagger(name)
-      lambda {|attrs = {}, *children| HtmlTag.new name, attrs, *children}
+      lambda do |*args|
+        case args[0]
+          when Array then HtmlTag.new name, args[0], *args[1..-1]
+          else HtmlTag.new name, {}, *args
+        end
+      end
     end
 
     VALUES = {
