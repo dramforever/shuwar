@@ -18,15 +18,13 @@ module Shuwar::Stdlib
       end
 
       def add_to(a)
-        doc = a.document
-        ele = doc.create_element @name, @attrs
+        ele = a.document.create_element @name, @attrs
         @children.each do |c|
           case c
             when String then ele << c
             else c.add_to ele
           end
         end
-        doc << ele
       end
     end
 
@@ -37,6 +35,10 @@ module Shuwar::Stdlib
           else HtmlTag.new name, {}, *args
         end
       end
+    end
+
+    def self.add_tagger(name)
+      VALUES[name] = tagger name
     end
 
     VALUES = {
@@ -52,9 +54,12 @@ module Shuwar::Stdlib
         html_tagger: lambda {|name| tagger name}
     }
 
-    %w{div span p pre code}.each do |t|
-      VALUES[t.to_sym] = tagger t.to_sym
+    %w{div span p pre code html body head}.each do |t|
+      add_tagger t.to_sym
     end
 
+    (1..6).each do |i|
+      add_tagger "h#{i}".to_sym
+    end
   end
 end
