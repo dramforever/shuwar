@@ -26,7 +26,7 @@ Now try typing some expressions
 
     [ppp 1]
 
-We have syntax support for writing, but no functions for that
+We have syntax support for writing: you can call functions like this
 
     puts | Each line
     puts | is an arg to the tag
@@ -42,7 +42,44 @@ will not work
     [puts "Each line" "is an arg to the tag"]
     [puts "Another"]
 
-Like lisp we have `#` for quote
+If you load the nokogiri library, you can have some html
+
+    [load #nokogiri]
+
+    [set main_content
+        [div #[
+            class | content
+            id    | main-content
+        ]
+
+    h1      | Sample
+    ]
+
+    [put_html
+        [html [body
+            main_content
+        ]]
+    ]
+
+It's from `sample.swr`, you should look at it.
+
+Note the attributes: it's the same as the following
+
+    #[ [class
+       | content
+       ]
+
+       [id
+       | main-content
+       ]]
+
+However just as `sample.swr` says:
+
+> It's looks like a hack, but it feels great!
+
+We recommend this rather than the spell-out-by-hand method
+
+We have `#` for quote
 
     [print #[print 1]]
 
