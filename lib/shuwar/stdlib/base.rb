@@ -7,14 +7,6 @@ module Shuwar::Stdlib
           load_lib lib
         end,
 
-        some_tag: lambda do |*texts|
-          "SOME ( #{ texts.join "\n" } ) TAG"
-        end,
-
-        p: lambda do |*texts|
-          "<p>#{ texts.join "\n" }</p>"
-        end,
-
         begin: lambda do |*vals|
           vals[-1]
         end,
