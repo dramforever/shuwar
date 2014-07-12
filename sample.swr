@@ -1,0 +1,32 @@
+[load #nokogiri]
+
+[set main_content
+    [div #[
+        class | content
+        id    | main-content
+    ]
+
+h1      | Shuwar sample
+        |
+p       | This is a sample of shuwar
+p:span  | As you can see, it works
+        |
+p       | It's processed by the nokogiri library
+        |
+h2      | Just one note
+        |
+p       | If you think that shuwar is really weird, it is!
+        |
+h2      | Some weird thing you might notice
+        |
+h3      | Did you noticed that the attrs part of this div is weird?
+        |
+p       | It's looks like a hack, but it feels great!
+
+    ]]
+
+[put_html
+    [html [body
+        main_content
+    ]]
+]
