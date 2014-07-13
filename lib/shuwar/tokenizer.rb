@@ -56,10 +56,8 @@ module Shuwar
               block.call t.to_i
             when t.chars.all? {|c| ('1'..'9') === c or c == '.' }
               block.call t.to_f
-            when /\A[a-zA-Z]\z/ =~ t[0] && t.chars.all? {|c| /\A[a-zA-Z0-9_]+\z/ =~ c }
-              block.call t.to_sym
             else
-              raise "#{t}? What was that?"
+              block.call t.to_sym
           end
         end
       else
