@@ -35,6 +35,11 @@ module Shuwar::Stdlib
 
         fetch: lambda do |env, key|
           env.get_value key
+        end,
+
+        from_file: lambda do |name, key|
+          env = evaluate [:load_file, name]
+          env.get_value key
         end
     }
 
