@@ -1,4 +1,4 @@
-require "shuwar/stdlib"
+require "shuwar"
 
 module Shuwar::Stdlib
   module Base
@@ -17,6 +17,24 @@ module Shuwar::Stdlib
 
         puts: lambda do |*vals|
           puts *vals
+        end,
+
+        load_file: lambda do |name|
+          File.open name do |f|
+            tk = Shuwar::Tokenizer.new f
+            parser = Shuwar::Parser.new tk
+            runtime = Shuwar::Runtime.new
+
+            parser.each_object do |x|
+              runtime.evaluate x
+            end
+
+            runtime
+          end
+        end,
+
+        fetch: lambda do |env, key|
+          env.get_value key
         end
     }
 
