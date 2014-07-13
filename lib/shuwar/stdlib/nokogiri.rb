@@ -14,7 +14,12 @@ module Shuwar::Stdlib
       def initialize(name, attrs, *children)
         @name = name.to_s
         @attrs = attrs.to_h
-        @children = children
+        if children.all? {|a| a.is_a? String}
+          # Multi strings should get a space between them
+          @children = [children.join(" ")]
+        else
+          @children = children
+        end
       end
 
       def add_to(a)
