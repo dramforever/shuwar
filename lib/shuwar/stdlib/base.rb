@@ -21,8 +21,7 @@ module Shuwar::Stdlib
 
         load_file: lambda do |name|
           File.open name do |f|
-            tk = Shuwar::Tokenizer.new f
-            parser = Shuwar::Parser.new tk
+            parser = Shuwar::Parser.new Shuwar::Tokenizer.new f
             runtime = Shuwar::Runtime.new
 
             parser.each_object do |x|
@@ -66,6 +65,17 @@ module Shuwar::Stdlib
             end
           else
             evaluate [:lambda, args, [:begin, *body]]
+          end
+        end,
+
+        import: lambda do |name, *vals|
+          env = evaluate [:load_file, "#{name}.swr"]
+          if vals.empty?
+            set_value name, env
+          else
+            vals.each do |v|
+              set_value v, env.get_value(v)
+            end
           end
         end
     }
