@@ -1,10 +1,56 @@
 #!/usr/bin/env ruby
 
 require "shuwar"
+require "ostruct"
+require "optparse"
+
+options = OpenStruct.new
+options.imports = []
+options.loads = []
+options.requires = []
+
+opt_parser = OptionParser.new do |o|
+  o.banner = "Usage: shuwar [options] [files]"
+
+  o.on "-i", "--import ...", Array,
+       "Call import before evaluating" do |list|
+    options.imports << list.map(&:to_sym)
+  end
+
+  o.on "-l", "--load LIBRARY",
+       "Load LIBRARY before evaluating" do |lib|
+    options.loads << lib.to_sym
+  end
+
+  o.on "-r", "--require NAME",
+       "Same as ruby -r" do |name|
+    options.requires << name
+  end
+
+  o.on "-h", "--help",
+       "This help message" do
+    puts o
+    exit 1
+  end
+end
+
+opt_parser.parse! ARGV
 
 tk = Shuwar::Tokenizer.new ARGF
 parser = Shuwar::Parser.new tk
 runtime = Shuwar::Runtime.new
+
+options.requires.each do |r|
+  require r
+end
+
+options.loads.each do |l|
+  runtime.evaluate [:load, [:quote, l]]
+end
+
+options.imports.each do |i|
+  runtime.evaluate [:import, *i]
+end
 
 parser.each_object do |x|
   runtime.evaluate x
